@@ -1,0 +1,53 @@
+name: Publish source tree
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/publish-source-tree.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish-source-tree:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download clean source archive from release
+        run: |
+          curl -L --fail --show-error \
+            -o /tmp/marginlight-source.zip \
+            https://github.com/cxrbuddy/marginlight/releases/download/v0.1.0/Marginlight_Source_0.1.0_002650.zip
+
+      - name: Unpack source into repository root
+        run: |
+          rm -rf /tmp/marginlight-source
+          mkdir -p /tmp/marginlight-source
+          unzip -q /tmp/marginlight-source.zip -d /tmp/marginlight-source
+          SOURCE_DIR="$(find /tmp/marginlight-source -maxdepth 1 -type d -name 'Marginlight-Public.*' | head -n 1)"
+          test -n "$SOURCE_DIR"
+          rsync -a \
+            --exclude='__MACOSX/' \
+            --exclude='*/._*' \
+            --exclude='.DS_Store' \
+            "$SOURCE_DIR"/ ./
+
+      - name: Commit source tree
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git status --short
+          if git diff --quiet -- .; then
+            echo "No source changes to commit."
+            exit 0
+          fi
+          git add -A
+          git commit -m "Publish full Marginlight source tree"
+          git push
