@@ -1,0 +1,72 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Marginlight",
+  "version": "0.1.0",
+  "identifier": "com.marginlight.app",
+  "build": {
+    "beforeDevCommand": "npm run dev:web",
+    "devUrl": "http://localhost:5173",
+    "beforeBuildCommand": "npm run build:web",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "macOSPrivateApi": true,
+    "security": {
+      "csp": null
+    },
+    "windows": [
+      {
+        "label": "island",
+        "title": "Marginlight",
+        "url": "index.html#/island",
+        "width": 980,
+        "height": 168,
+        "minWidth": 520,
+        "minHeight": 96,
+        "maxHeight": 280,
+        "decorations": false,
+        "transparent": true,
+        "shadow": false,
+        "resizable": false,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "visible": true,
+        "fullscreen": false,
+        "center": false
+      },
+      {
+        "label": "settings",
+        "title": "Marginlight Settings",
+        "url": "index.html#/settings",
+        "width": 760,
+        "height": 720,
+        "minWidth": 640,
+        "minHeight": 620,
+        "decorations": true,
+        "transparent": false,
+        "shadow": true,
+        "resizable": true,
+        "alwaysOnTop": false,
+        "skipTaskbar": false,
+        "visible": false,
+        "fullscreen": false,
+        "center": true
+      }
+    ]
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "category": "Productivity",
+    "shortDescription": "A daily wisdom island for your MacBook.",
+    "longDescription": "Marginlight shows one meaningful quote per day in a small floating island above your work. It runs offline and keeps your quotes on your Mac.",
+    "copyright": "Copyright © 2026 Marginlight",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.png"
+    ]
+  }
+}

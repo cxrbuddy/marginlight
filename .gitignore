@@ -1,0 +1,15 @@
+node_modules
+.npm-cache
+dist
+dist-ssr
+target
+src-tauri/target
+src-tauri/gen
+release
+screenshots
+src-tauri/icons/icon.iconset
+*.log
+.DS_Store
+.env
+.idea
+.vscode
